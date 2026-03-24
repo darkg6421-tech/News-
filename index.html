@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>News App</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      padding: 10px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #news, #saved {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+      background: #334155;
+    }
+
+    #last {
+      text-align: center;
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .card a {
+      color: #38bdf8;
+    }
+
+    button {
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: #000;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+      margin-top: 5px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(14, 165, 233, 0.5);
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    }
+
+    input {
+      width:100%;
+      padding:10px;
+      margin:10px 0;
+      border-radius:10px;
+      border:none;
+    }
+
+    .section-title {
+      margin-top: 25px;
+      font-size: 18px;
+      color: #38bdf8;
+      text-align: center;
+    }
+
+    .top-controls {
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      margin:10px 0;
+      flex-wrap: wrap;
+    }
+
+    .empty {
+      text-align:center;
+      opacity:0.7;
+      font-size:14px;
+    }
+
+    /* 🔥 loading text for infinite scroll */
+    #loadingMore {
+      text-align:center;
+      opacity:0.6;
+      margin:15px 0;
+      display:none;
+    }
+  </style>
+
+</head>
+<body>
+
+<h1>Latest News</h1>
+
+<input 
+  type="text" 
+  id="search" 
+  placeholder="🔍 Search news..." 
+  oninput="fetchNews()"
+/>
+
+<div class="top-controls">
+  <button onclick="setCategory('all')">All</button>
+  <button onclick="setCategory('india')">India</button>
+  <button onclick="setCategory('defence')">Defence</button>
+  <button onclick="setCategory('world')">World</button>
+</div>
+
+<div class="top-controls">
+  <button onclick="fetchNews()">🔄 Refresh</button>
+</div>
+
+<p id="last"></p>
+
+<!-- 🔥 LIVE NEWS -->
+<div id="news">Loading...</div>
+
+<p id="loadingMore">Loading more news...</p>
+
+<!-- 🔥 SAVED NEWS -->
+<h2 class="section-title">⭐ Saved News</h2>
+<div id="saved">
+  <p class="empty">No saved news yet</p>
+</div>
+
+<script src="script.js?v=5"></script>
+
+</body>
+</html>
