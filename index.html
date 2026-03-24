@@ -100,7 +100,6 @@
       font-size:14px;
     }
 
-    /* 🔥 loading text for infinite scroll */
     #loadingMore {
       text-align:center;
       opacity:0.6;
@@ -134,16 +133,54 @@
 
 <p id="last"></p>
 
-<!-- 🔥 LIVE NEWS -->
 <div id="news">Loading...</div>
 
 <p id="loadingMore">Loading more news...</p>
 
-<!-- 🔥 SAVED NEWS -->
 <h2 class="section-title">⭐ Saved News</h2>
 <div id="saved">
   <p class="empty">No saved news yet</p>
 </div>
+
+<!-- 🔥 FIREBASE + NOTIFICATION SETUP -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-messaging.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAEwEkcWSwzORURd3hQpXZ0VHyl2h9PrLY",
+    authDomain: "news-app-2e5ac.firebaseapp.com",
+    projectId: "news-app-2e5ac",
+    storageBucket: "news-app-2e5ac.firebasestorage.app",
+    messagingSenderId: "26803931760",
+    appId: "1:26803931760:web:3c889f991318f47bf202b5"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+
+  // 🔔 ask notification permission
+  async function enableNotifications() {
+    try {
+      const permission = await Notification.requestPermission();
+
+      if (permission === "granted") {
+        const token = await getToken(messaging, {
+          vapidKey: "YOUR_VAPID_KEY_HERE"
+        });
+
+        console.log("TOKEN:", token);
+      } else {
+        console.log("Permission denied");
+      }
+
+    } catch (err) {
+      console.error("Notification error:", err);
+    }
+  }
+
+  enableNotifications();
+</script>
 
 <script src="script.js?v=5"></script>
 
