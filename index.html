@@ -11,9 +11,7 @@
       padding: 10px;
     }
 
-    h1 {
-      text-align: center;
-    }
+    h1 { text-align: center; }
 
     #news, #saved {
       display: flex;
@@ -26,49 +24,6 @@
       padding: 12px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: 0.25s;
-    }
-
-    .card:hover {
-      transform: scale(1.02);
-      background: #334155;
-    }
-
-    #last {
-      text-align: center;
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 10px;
-    }
-
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .card a {
-      color: #38bdf8;
-    }
-
-    button {
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      color: #000;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-      margin-top: 5px;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(14, 165, 233, 0.5);
-      background: linear-gradient(135deg, #0ea5e9, #0284c7);
     }
 
     input {
@@ -79,70 +34,40 @@
       border:none;
     }
 
-    .section-title {
-      margin-top: 25px;
-      font-size: 18px;
-      color: #38bdf8;
-      text-align: center;
-    }
-
-    .top-controls {
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      margin:10px 0;
-      flex-wrap: wrap;
-    }
-
-    .empty {
-      text-align:center;
-      opacity:0.7;
-      font-size:14px;
-    }
-
-    #loadingMore {
-      text-align:center;
-      opacity:0.6;
-      margin:15px 0;
-      display:none;
+    button {
+      padding:10px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
     }
   </style>
-
 </head>
+
 <body>
 
 <h1>Latest News</h1>
 
-<input 
-  type="text" 
-  id="search" 
-  placeholder="🔍 Search news..." 
-  oninput="fetchNews()"
-/>
+<input type="text" id="search" placeholder="Search..." oninput="fetchNews()" />
 
-<div class="top-controls">
+<div>
   <button onclick="setCategory('all')">All</button>
   <button onclick="setCategory('india')">India</button>
   <button onclick="setCategory('defence')">Defence</button>
   <button onclick="setCategory('world')">World</button>
 </div>
 
-<div class="top-controls">
-  <button onclick="fetchNews()">🔄 Refresh</button>
+<div>
+  <button onclick="fetchNews()">Refresh</button>
 </div>
 
 <p id="last"></p>
 
 <div id="news">Loading...</div>
 
-<p id="loadingMore">Loading more news...</p>
+<h2>Saved News</h2>
+<div id="saved"></div>
 
-<h2 class="section-title">⭐ Saved News</h2>
-<div id="saved">
-  <p class="empty">No saved news yet</p>
-</div>
-
-<!-- 🔥 FIREBASE NOTIFICATION -->
+<!-- 🔥 FIREBASE NOTIFICATION FULL FIX -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
   import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-messaging.js";
@@ -165,7 +90,8 @@
 
       if (permission === "granted") {
 
-        const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+        // ✅ CORRECT PATH (IMPORTANT)
+        const registration = await navigator.serviceWorker.register("./firebase-messaging-sw.js");
 
         const token = await getToken(messaging, {
           vapidKey: "BDzUzp2gknfh45Hbd1jciDRU0NAlZt5yuYFNxbHBNLrK_sxPytOxaKuEql-phkWisMt_661ZBhByEb40kqWs48k",
